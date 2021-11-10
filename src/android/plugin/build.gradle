@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+dependencies {
+    implementation ':Corona@aar'
+    implementation 'com.kochava.base:tracker:3.10.1'
+    implementation 'com.kochava.base:tracker-network:3.10.1'
+}
+
+task extractPluginJar() {
+    group "Solar2Dev"
+    dependsOn assemble
+    doLast {
+        copy {
+            from {
+                zipTree("$buildDir/outputs/aar/${project.name}-release.aar").matching {
+                    include 'classes.jar'
+                }.singleFile
+            }
+            into "$buildDir/outputs/"
+            String packageName = new XmlSlurper().parse(file('src/main/AndroidManifest.xml')).@package.text()
+            rename "classes.jar", "${packageName}.jar"
+        }
+    }
+}

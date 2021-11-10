@@ -1,0 +1,7 @@
+{
+  "cmd": "/Applications/Corona/Corona\\ Simulator.app/Contents/MacOS/Corona\\ Simulator",
+  "args": ["main.lua"],
+  "name": "Corona SDK",
+  "cwd": "{PROJECT_PATH}",
+  "sh": true
+}

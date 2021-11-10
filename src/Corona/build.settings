@@ -1,0 +1,34 @@
+settings =
+{
+	orientation =
+	{
+		default = "portrait",
+		supported = { "portrait" }
+	},
+
+	iphone =
+	{
+	xcassets = "Images.xcassets",
+	plist =
+	{
+		UILaunchStoryboardName = "LaunchScreen",
+	}
+	},
+
+	android =
+	{
+		usesPermissions =
+		{
+			"android.permission.INTERNET",
+			"android.permission.ACCESS_NETWORK_STATE"
+		}
+	},
+
+	plugins =
+	{
+		["plugin.kochava"] =
+		{
+			publisherId = "com.coronalabs"
+		}
+	}
+}

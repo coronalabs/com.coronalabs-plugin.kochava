@@ -1,0 +1,405 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DBC6BB8D2724E68D008461DB /* KochavaPlugin.mm in Sources */ = {isa = PBXBuildFile; fileRef = DBC6BB8B2724E68D008461DB /* KochavaPlugin.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A4E253B4166D6FB300DCDC2C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A4E253B6166D6FB300DCDC2C /* libplugin_kochava.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libplugin_kochava.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBA0A9B4273B1DCE003287BC /* KVAPartner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAPartner.h; sourceTree = "<group>"; };
+		DBA0A9B5273B1DCE003287BC /* KVAAsForContextObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAAsForContextObjectProtocol.h; sourceTree = "<group>"; };
+		DBA0A9B7273B1DCE003287BC /* KVAEventType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAEventType.h; sourceTree = "<group>"; };
+		DBA0A9B8273B1DCE003287BC /* KVAAppGroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAAppGroups.h; sourceTree = "<group>"; };
+		DBA0A9B9273B1DCE003287BC /* KVAStartable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAStartable.h; sourceTree = "<group>"; };
+		DBA0A9BA273B1DCE003287BC /* KVAConfigureWithObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAConfigureWithObjectProtocol.h; sourceTree = "<group>"; };
+		DBA0A9BB273B1DCE003287BC /* KVAConsent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAConsent.h; sourceTree = "<group>"; };
+		DBA0A9BC273B1DCE003287BC /* NSString+KochavaCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KochavaCore.h"; sourceTree = "<group>"; };
+		DBA0A9BD273B1DCE003287BC /* KVALogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVALogLevel.h; sourceTree = "<group>"; };
+		DBA0A9BE273B1DCE003287BC /* KVAContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAContext.h; sourceTree = "<group>"; };
+		DBA0A9BF273B1DCE003287BC /* KVALog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVALog.h; sourceTree = "<group>"; };
+		DBA0A9C0273B1DCE003287BC /* KVASharedPropertyProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVASharedPropertyProvider.h; sourceTree = "<group>"; };
+		DBA0A9C1273B1DCE003287BC /* KVASystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVASystem.h; sourceTree = "<group>"; };
+		DBA0A9C2273B1DCE003287BC /* KVAProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAProduct.h; sourceTree = "<group>"; };
+		DBA0A9C3273B1DCE003287BC /* KochavaCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KochavaCore.h; sourceTree = "<group>"; };
+		DBA0A9C4273B1DCE003287BC /* KVACoreProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVACoreProduct.h; sourceTree = "<group>"; };
+		DBA0A9C5273B1DCE003287BC /* KVAFromObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAFromObjectProtocol.h; sourceTree = "<group>"; };
+		DBA0A9C6273B1DCE003287BC /* NSObject+KochavaCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KochavaCore.h"; sourceTree = "<group>"; };
+		DBA0A9C7273B1DCE003287BC /* KVAEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAEvent.h; sourceTree = "<group>"; };
+		DBA0A9C8273B1DCE003287BC /* KVAEventSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAEventSender.h; sourceTree = "<group>"; };
+		DBA0A9CA273B1DCE003287BC /* KVATracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVATracker.h; sourceTree = "<group>"; };
+		DBA0A9CB273B1DCE003287BC /* KVADeeplinks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVADeeplinks.h; sourceTree = "<group>"; };
+		DBA0A9CC273B1DCE003287BC /* KVAEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAEvents.h; sourceTree = "<group>"; };
+		DBA0A9CD273B1DCE003287BC /* KVAAttribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAAttribution.h; sourceTree = "<group>"; };
+		DBA0A9CE273B1DCE003287BC /* KVAPushNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAPushNotifications.h; sourceTree = "<group>"; };
+		DBA0A9CF273B1DCE003287BC /* KVACustomIdentifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVACustomIdentifiers.h; sourceTree = "<group>"; };
+		DBA0A9D0273B1DCE003287BC /* KochavaTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KochavaTracker.h; sourceTree = "<group>"; };
+		DBA0A9D1273B1DCE003287BC /* KVAPrivacyProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAPrivacyProfile.h; sourceTree = "<group>"; };
+		DBA0A9D2273B1DCE003287BC /* KVAAppTrackingTransparency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAAppTrackingTransparency.h; sourceTree = "<group>"; };
+		DBA0A9D3273B1DCE003287BC /* KVADeeplink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVADeeplink.h; sourceTree = "<group>"; };
+		DBA0A9D4273B1DCE003287BC /* KVAPushNotificationsToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAPushNotificationsToken.h; sourceTree = "<group>"; };
+		DBA0A9D5273B1DCE003287BC /* KVAEvent+Standard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KVAEvent+Standard.h"; sourceTree = "<group>"; };
+		DBA0A9D6273B1DCE003287BC /* KVAAttributionResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAAttributionResult.h; sourceTree = "<group>"; };
+		DBA0A9D7273B1DCE003287BC /* KVAPrivacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAPrivacy.h; sourceTree = "<group>"; };
+		DBA0A9D8273B1DCE003287BC /* KVAIdentityLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVAIdentityLink.h; sourceTree = "<group>"; };
+		DBA0A9DA273B1DCE003287BC /* KVATrackerProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVATrackerProduct.h; sourceTree = "<group>"; };
+		DBC6BB8B2724E68D008461DB /* KochavaPlugin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = KochavaPlugin.mm; path = ../shared/KochavaPlugin.mm; sourceTree = "<group>"; };
+		DBC6BB8C2724E68D008461DB /* KochavaPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KochavaPlugin.h; path = ../shared/KochavaPlugin.h; sourceTree = "<group>"; };
+		F572F81A1EE0705B001BC814 /* CoronaNative.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CoronaNative.xcconfig; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A4E253B3166D6FB300DCDC2C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A447B609165D72A6009EA762 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				DBA0A9B3273B1DCE003287BC /* KochavaCore */,
+				DBA0A9C9273B1DCE003287BC /* KochavaTracker */,
+				DBC6BB8C2724E68D008461DB /* KochavaPlugin.h */,
+				DBC6BB8B2724E68D008461DB /* KochavaPlugin.mm */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		A484110E15114F700074BD57 = {
+			isa = PBXGroup;
+			children = (
+				A447B609165D72A6009EA762 /* Source */,
+				F54A40C01EE083A300AF417D /* CoronaNative */,
+				A484111A15114F700074BD57 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A484111A15114F700074BD57 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A4E253B6166D6FB300DCDC2C /* libplugin_kochava.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DBA0A9B3273B1DCE003287BC /* KochavaCore */ = {
+			isa = PBXGroup;
+			children = (
+				DBA0A9B4273B1DCE003287BC /* KVAPartner.h */,
+				DBA0A9B5273B1DCE003287BC /* KVAAsForContextObjectProtocol.h */,
+				DBA0A9B7273B1DCE003287BC /* KVAEventType.h */,
+				DBA0A9B8273B1DCE003287BC /* KVAAppGroups.h */,
+				DBA0A9B9273B1DCE003287BC /* KVAStartable.h */,
+				DBA0A9BA273B1DCE003287BC /* KVAConfigureWithObjectProtocol.h */,
+				DBA0A9BB273B1DCE003287BC /* KVAConsent.h */,
+				DBA0A9BC273B1DCE003287BC /* NSString+KochavaCore.h */,
+				DBA0A9BD273B1DCE003287BC /* KVALogLevel.h */,
+				DBA0A9BE273B1DCE003287BC /* KVAContext.h */,
+				DBA0A9BF273B1DCE003287BC /* KVALog.h */,
+				DBA0A9C0273B1DCE003287BC /* KVASharedPropertyProvider.h */,
+				DBA0A9C1273B1DCE003287BC /* KVASystem.h */,
+				DBA0A9C2273B1DCE003287BC /* KVAProduct.h */,
+				DBA0A9C3273B1DCE003287BC /* KochavaCore.h */,
+				DBA0A9C4273B1DCE003287BC /* KVACoreProduct.h */,
+				DBA0A9C5273B1DCE003287BC /* KVAFromObjectProtocol.h */,
+				DBA0A9C6273B1DCE003287BC /* NSObject+KochavaCore.h */,
+				DBA0A9C7273B1DCE003287BC /* KVAEvent.h */,
+				DBA0A9C8273B1DCE003287BC /* KVAEventSender.h */,
+			);
+			name = KochavaCore;
+			path = Libs/KochavaCore;
+			sourceTree = "<group>";
+		};
+		DBA0A9C9273B1DCE003287BC /* KochavaTracker */ = {
+			isa = PBXGroup;
+			children = (
+				DBA0A9CA273B1DCE003287BC /* KVATracker.h */,
+				DBA0A9CB273B1DCE003287BC /* KVADeeplinks.h */,
+				DBA0A9CC273B1DCE003287BC /* KVAEvents.h */,
+				DBA0A9CD273B1DCE003287BC /* KVAAttribution.h */,
+				DBA0A9CE273B1DCE003287BC /* KVAPushNotifications.h */,
+				DBA0A9CF273B1DCE003287BC /* KVACustomIdentifiers.h */,
+				DBA0A9D0273B1DCE003287BC /* KochavaTracker.h */,
+				DBA0A9D1273B1DCE003287BC /* KVAPrivacyProfile.h */,
+				DBA0A9D2273B1DCE003287BC /* KVAAppTrackingTransparency.h */,
+				DBA0A9D3273B1DCE003287BC /* KVADeeplink.h */,
+				DBA0A9D4273B1DCE003287BC /* KVAPushNotificationsToken.h */,
+				DBA0A9D5273B1DCE003287BC /* KVAEvent+Standard.h */,
+				DBA0A9D6273B1DCE003287BC /* KVAAttributionResult.h */,
+				DBA0A9D7273B1DCE003287BC /* KVAPrivacy.h */,
+				DBA0A9D8273B1DCE003287BC /* KVAIdentityLink.h */,
+				DBA0A9DA273B1DCE003287BC /* KVATrackerProduct.h */,
+			);
+			name = KochavaTracker;
+			path = Libs/KochavaTracker;
+			sourceTree = "<group>";
+		};
+		F54A40C01EE083A300AF417D /* CoronaNative */ = {
+			isa = PBXGroup;
+			children = (
+				F572F81A1EE0705B001BC814 /* CoronaNative.xcconfig */,
+			);
+			name = CoronaNative;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A4E253B5166D6FB300DCDC2C /* plugin_kochava */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A4E253BF166D6FB300DCDC2C /* Build configuration list for PBXNativeTarget "plugin_kochava" */;
+			buildPhases = (
+				C2E70B581EE9F110006E4570 /* Corona Native */,
+				A4E253B2166D6FB300DCDC2C /* Sources */,
+				A4E253B3166D6FB300DCDC2C /* Frameworks */,
+				A4E253B4166D6FB300DCDC2C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = plugin_kochava;
+			productName = plugin_library;
+			productReference = A4E253B6166D6FB300DCDC2C /* libplugin_kochava.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A484111015114F700074BD57 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+			};
+			buildConfigurationList = A484111315114F700074BD57 /* Build configuration list for PBXProject "Plugin" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+			);
+			mainGroup = A484110E15114F700074BD57;
+			productRefGroup = A484111A15114F700074BD57 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A4E253B5166D6FB300DCDC2C /* plugin_kochava */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C2E70B581EE9F110006E4570 /* Corona Native */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Corona Native";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# echo \"CORONA_ROOT: ${CORONA_ROOT}\"\nif [ ! -d \"${CORONA_ROOT}\" ]\nthen\n    echo \"error: Corona Native has not been setup.  Run 'Native/SetupCoronaNative.app' in your Corona install to set it up\" >&2\n\n    exit 1\nelse\n    echo \"Building with Corona Native from $(readlink \"${CORONA_ROOT}\")\"\nfi";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A4E253B2166D6FB300DCDC2C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBC6BB8D2724E68D008461DB /* KochavaPlugin.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A484114015114F700074BD57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F572F81A1EE0705B001BC814 /* CoronaNative.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A484114115114F700074BD57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F572F81A1EE0705B001BC814 /* CoronaNative.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A4E253C0166D6FB300DCDC2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DSTROOT = /tmp/plugin_library.dst;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EmbeddedFrameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EmbeddedFrameworks/libKochavaCoreiOS",
+					"$(PROJECT_DIR)/EmbeddedFrameworks/libKochavaTrackeriOS",
+					"$(PROJECT_DIR)/Libs/KochavaCore",
+					"$(PROJECT_DIR)/Libs/KochavaTracker",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A4E253C1166D6FB300DCDC2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DSTROOT = /tmp/plugin_library.dst;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EmbeddedFrameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EmbeddedFrameworks/libKochavaCoreiOS",
+					"$(PROJECT_DIR)/EmbeddedFrameworks/libKochavaTrackeriOS",
+					"$(PROJECT_DIR)/Libs/KochavaCore",
+					"$(PROJECT_DIR)/Libs/KochavaTracker",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A484111315114F700074BD57 /* Build configuration list for PBXProject "Plugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A484114015114F700074BD57 /* Debug */,
+				A484114115114F700074BD57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A4E253BF166D6FB300DCDC2C /* Build configuration list for PBXNativeTarget "plugin_kochava" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A4E253C0166D6FB300DCDC2C /* Debug */,
+				A4E253C1166D6FB300DCDC2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A484111015114F700074BD57 /* Project object */;
+}

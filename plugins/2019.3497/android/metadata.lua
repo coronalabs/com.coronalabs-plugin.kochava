@@ -15,22 +15,13 @@ local metadata =
             usesFeatures =
             {
             },
-            applicationChildElements =
-            {
-                [[
-                <receiver android:name ="com.kochava.base.ReferralReceiver" android:exported ="true">
-                    <intent-filter>
-                        <action android:name ="com.android.vending.INSTALL_REFERRER" />
-                    </intent-filter>
-                </receiver>
-                ]]
-            }
+
         }
     },
 
     coronaManifest = {
         dependencies = {
-            ["shared.google.play.services.ads.identifier"] = "com.coronalabs"
+            
         }
     }
 }

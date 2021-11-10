@@ -9,7 +9,7 @@ local metadata =
 
 		frameworks =
 		{
-			"Corona_plugin_kochava", "AdSupport", "Security", "CFNetwork", "c++", "z", "sqlite3.0", "sqlite3",
+			"Corona_plugin_kochava", "KochavaTracker", "KochavaCore", "AdSupport", "Security", "CFNetwork", "c++", "z", "sqlite3.0", "sqlite3",
 			"AudioToolbox", "CoreText", "JavaScriptCore", "TVMLKit", "MobileCoreServices", "CoreMedia", "StoreKit", "SystemConfiguration", "WebKit"
 		},
 

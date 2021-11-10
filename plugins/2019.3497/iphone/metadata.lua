@@ -5,9 +5,9 @@ local metadata =
 		format = "staticLibrary",
 
 		-- This is the name without the 'lib' prefix.
-		staticLibs = { "KochavaPlugin", "KochavaTrackeriOS" }, 
+		staticLibs = { "plugin_kochava", "KochavaTrackeriOS", "KochavaCoreiOS" },
 
-		frameworks = { "iAd", "AdSupport", "WebKit" },
+		frameworks = { "WebKit" },
 		frameworksOptional = {},
 	}
 }
