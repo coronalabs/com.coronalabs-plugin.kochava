@@ -1,9 +1,11 @@
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-	implementation 'com.kochava.base:tracker:3.10.1'
-	implementation 'com.kochava.base:tracker-network:3.10.1'
+  def kochava_tracker_version = "4.1.0"
+  implementation("com.kochava.tracker:tracker:$kochava_tracker_version")
+  implementation("com.kochava.tracker:events:$kochava_tracker_version")
+  implementation("com.kochava.tracker:engagement:$kochava_tracker_version")
+  implementation("com.kochava.tracker:datapointnetwork:$kochava_tracker_version")
 }

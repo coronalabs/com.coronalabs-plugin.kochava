@@ -6,27 +6,11 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		0pGU/IMjTc4MBz4zyH8KzYLWx34=
-		</data>
-		<key>Modules/module.modulemap</key>
-		<data>
-		xF85AXTAOhlBpvhlSCHngw4pSjs=
+		ip9uwi487vsMXAPiVDkWYj6rAM0=
 		</data>
 	</dict>
 	<key>files2</key>
-	<dict>
-		<key>Modules/module.modulemap</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			xF85AXTAOhlBpvhlSCHngw4pSjs=
-			</data>
-			<key>hash2</key>
-			<data>
-			R56FavHJ/nXWwPlLYR2qXrYyUIQPIxeXyB5XGc1J5Xo=
-			</data>
-		</dict>
-	</dict>
+	<dict/>
 	<key>rules</key>
 	<dict>
 		<key>^.*</key>

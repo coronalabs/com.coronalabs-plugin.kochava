@@ -32,8 +32,8 @@
 // Plugin Constants
 // ----------------------------------------------------------------------------
 #define PLUGIN_NAME        "plugin.kochava"
-#define PLUGIN_VERSION     "3.0.0"
-#define PLUGIN_SDK_VERSION @"5.0.0"
+#define PLUGIN_VERSION     "3.0.1"
+#define PLUGIN_SDK_VERSION @"5.1.1"
 
 static const char EVENT_NAME[]    = "analyticsRequest";
 static const char PROVIDER_NAME[] = "kochava";

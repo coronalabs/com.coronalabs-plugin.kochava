@@ -18,6 +18,15 @@ import com.ansca.corona.CoronaEnvironment;
 import com.ansca.corona.CoronaRuntime;
 import com.ansca.corona.CoronaRuntimeListener;
 
+import com.kochava.tracker.Tracker;
+import com.kochava.tracker.attribution.InstallAttributionApi;
+import com.kochava.tracker.attribution.RetrievedInstallAttributionListener;
+import com.kochava.tracker.events.Event;
+import com.kochava.tracker.events.EventApi;
+import com.kochava.tracker.events.EventType;
+import com.kochava.tracker.init.CompletedInitListener;
+import com.kochava.tracker.init.InitApi;
+import com.kochava.tracker.log.LogLevel;
 import com.naef.jnlua.JavaFunction;
 import com.naef.jnlua.LuaType;
 import com.naef.jnlua.NamedJavaFunction;
@@ -33,15 +42,11 @@ import java.util.Locale;
 import java.util.Map;
 
 import android.os.Bundle;
+import android.util.EventLog;
 import android.util.Log;
 
 // Kochava imports
-import com.kochava.base.Tracker;
-import com.kochava.base.Tracker.IdentityLink;
-import com.kochava.base.Tracker.Event;
-import com.kochava.base.Tracker.Configuration;
-import com.kochava.base.AttributionUpdateListener;
-import com.kochava.base.ConsentStatusChangeListener;
+
 
 /**
  * Implements the Lua interface for the Kochava Plugin.
@@ -52,8 +57,8 @@ import com.kochava.base.ConsentStatusChangeListener;
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener
 {
   private static final String PLUGIN_NAME        = "plugin.kochava";
-  private static final String PLUGIN_VERSION     = "3.0.0";
-  private static final String PLUGIN_SDK_VERSION = Tracker.getVersion();
+  private static final String PLUGIN_VERSION     = "3.0.1";
+  private static final String PLUGIN_SDK_VERSION = "4.1.0";
 
   private static final String EVENT_NAME    = "analyticsRequest";
   private static final String PROVIDER_NAME = "kochava";
@@ -155,8 +160,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
   private static CoronaRuntimeTaskDispatcher coronaRuntimeTaskDispatcher = null;
 
   private static String functionSignature = "";
-  private static AttributionUpdateListener kochavaDelegate = null;
-  private static ConsentStatusChangeListener kochavaConsentDelegate = null;
+
 
   private static Boolean hasUserConsent = false;
   private static Boolean intelligentConsentManagement = false;
@@ -347,8 +351,6 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
     validStandardParamTypes.clear();
     validStandardParamProperties.clear();
 
-    kochavaDelegate = null;
-    kochavaConsentDelegate = null;
     coronaRuntimeTaskDispatcher = null;
     functionSignature = "";
   }
@@ -370,7 +372,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
 
   // return true if SDK is properly initialized
   private boolean isSDKInitialized() {
-    if (kochavaDelegate == null) {
+    if (Tracker.getInstance().isStarted() == false) {
       logMsg(ERROR_MSG, "kochava.init() must be called before calling other API functions");
       return false;
     }
@@ -418,8 +420,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
     }
   }
 
-  private IdentityLink makeIdentityLink(Map<Object, Object> map) {
-    IdentityLink link = new IdentityLink();
+  private void makeIdentityLink(Map<Object, Object> map) {
+
 
     for (Object key: map.keySet()) {
       String keyString;
@@ -440,11 +442,11 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
       else {
         valueString = value.toString();
       }
+      Tracker.getInstance().registerIdentityLink(keyString, valueString);
 
-      link = link.add(keyString, valueString);
     }
 
-    return link;
+
   }
 
 
@@ -497,14 +499,20 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
       Runnable runnableActivity = new Runnable() {
         public void run() {
           // get attribution data
-          String data = Tracker.getAttribution();
 
-          // send Corona Lua event
-          Map<String, Object> coronaEvent = new HashMap<>();
-          coronaEvent.put(EVENT_PHASE_KEY, PHASE_RECEIVED);
-          coronaEvent.put(EVENT_TYPE_KEY, TYPE_ATTRIBUTION);
-          coronaEvent.put(EVENT_DATA_KEY, data);
-          dispatchLuaEvent(coronaEvent);
+
+          InstallAttributionApi currentInstallAttribution = Tracker.getInstance().getInstallAttribution();
+          if(!currentInstallAttribution.isRetrieved()) {
+            Tracker.getInstance().retrieveInstallAttribution(installAttributionApi -> {
+              // send Corona Lua event
+              Map<String, Object> coronaEvent = new HashMap<>();
+              coronaEvent.put(EVENT_PHASE_KEY, PHASE_RECEIVED);
+              coronaEvent.put(EVENT_TYPE_KEY, TYPE_ATTRIBUTION);
+              coronaEvent.put(EVENT_DATA_KEY, installAttributionApi.getRaw().toString());
+              dispatchLuaEvent(coronaEvent);
+            });
+          }
+
         }
       };
 
@@ -543,7 +551,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
       boolean enableAttributionData = false;
 
       // prevent init from being called twice
-      if (kochavaDelegate != null) {
+      if (Tracker.getInstance().isStarted()) {
         return 0;
       }
 
@@ -666,24 +674,28 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
           @Override
           public void run() {
             // set plugin traffic detection
-            Tracker.executeAdvancedInstruction("CoronaPlugin " + PLUGIN_VERSION, "");
+            Tracker.getInstance().executeAdvancedInstruction("CoronaPlugin " + PLUGIN_VERSION, "");
 
-            kochavaDelegate = new KochavaDelegate();
-            kochavaConsentDelegate = new KochavaConsentDelegate();
+            Tracker.getInstance().retrieveInstallAttribution(new RetrievedInstallAttributionListener() {
+              @Override
+              public void onRetrievedInstallAttribution(InstallAttributionApi installAttributionApi) {
+                Map<String, Object> coronaEvent = new HashMap<>();
+                coronaEvent.put(EVENT_PHASE_KEY, PHASE_RECEIVED);
+                coronaEvent.put(EVENT_TYPE_KEY, TYPE_ATTRIBUTION);
+                coronaEvent.put(EVENT_DATA_KEY, installAttributionApi.getRaw());
+                dispatchLuaEvent(coronaEvent);
+              }
+            });
 
-            Configuration config = new Configuration(coronaActivity.getApplicationContext())
-              .setAppGuid(fAppGUID)
-              .setAttributionUpdateListener(kochavaDelegate)
-              .setAppLimitAdTracking(fLimitAdTracking)
-            .setIntelligentConsentManagement(intelligentConsentManagement || hasUserConsent)
-            .setConsentStatusChangeListener(kochavaConsentDelegate);
 
             if (fEnableDebug) {
-              config = config.setLogLevel(Tracker.LOG_LEVEL_DEBUG);
+              Tracker.getInstance().setLogLevel(LogLevel.DEBUG);
             }
 
             // configure SDK
-            Tracker.configure(config);
+            Tracker.getInstance().setAppLimitAdTracking(fLimitAdTracking);
+            Tracker.getInstance().setIntelligentConsentGranted(intelligentConsentManagement || hasUserConsent);
+            Tracker.getInstance().startWithAppGuid(coronaActivity.getApplicationContext(),fAppGUID);
 
             // Log plugin version to device log
             Log.i(CORONA_TAG, PLUGIN_NAME + ": " + PLUGIN_VERSION + " (SDK: " + PLUGIN_SDK_VERSION + ")");
@@ -691,25 +703,21 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
             // send Corona Lua event
             Map<String, Object> coronaEvent = new HashMap<>();
             coronaEvent.put(EVENT_PHASE_KEY, PHASE_INIT);
-            coronaEvent.put(EVENT_DATA_KEY, Tracker.getDeviceId());
+            coronaEvent.put(EVENT_DATA_KEY, Tracker.getInstance().getDeviceId());
             dispatchLuaEvent(coronaEvent);
 
 
             // Check if we know our consent status from a previous launch.
-            if(!Tracker.isConsentGrantedOrNotRequired()) {
-              if(Tracker.isConsentShouldPrompt()) {
-                if (!intelligentConsentManagement) {
-                  Tracker.setConsentGranted(hasUserConsent);
-                  Tracker.clearConsentShouldPrompt();
-                } else {
-                  // send Corona Lua event
-                  Map<String, Object> coronaConsentEvent = new HashMap<>();
-                  coronaConsentEvent.put(EVENT_PHASE_KEY, PHASE_RECEIVED);
-                  coronaConsentEvent.put(EVENT_TYPE_KEY, TYPE_CONSENT);
-                  coronaConsentEvent.put(EVENT_DATA_KEY, "Should prompt for user consent");
-                  dispatchLuaEvent(coronaConsentEvent);
-                }
-              }
+
+            if (!intelligentConsentManagement) {
+              Tracker.getInstance().setIntelligentConsentGranted(hasUserConsent);
+            } else {
+              // send Corona Lua event
+              Map<String, Object> coronaConsentEvent = new HashMap<>();
+              coronaConsentEvent.put(EVENT_PHASE_KEY, PHASE_RECEIVED);
+              coronaConsentEvent.put(EVENT_TYPE_KEY, TYPE_CONSENT);
+              coronaConsentEvent.put(EVENT_DATA_KEY, "Should prompt for user consent");
+              dispatchLuaEvent(coronaConsentEvent);
             }
           }
         });
@@ -812,7 +820,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
           @Override
           public void run() {
             // send adTracking setting to Kochava
-            Tracker.setAppLimitAdTracking(limitTracking);
+            Tracker.getInstance().setAppLimitAdTracking(limitTracking);
           }
         });
       }
@@ -883,7 +891,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
           @Override
           public void run() {
             // send deep link event to Kochava
-            Tracker.sendEventDeepLink(URL); // sourceAppParams not supported on Android
+            Event.buildWithEventType(EventType.DEEPLINK).setUri(URL).send();
 
             // send Corona Lua event
             Map<String, Object> coronaEvent = new HashMap<>();
@@ -1047,14 +1055,15 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
           public void run() {
             // send tracking event to Kochava
             if (receipt != null) {
-              Event receiptEvent = new Event(eventName)
-                .addCustom("purchaseDetails", eventDetails)
-                .setGooglePlayReceipt(receipt, receiptDataSignature);
-
-              Tracker.sendEvent(receiptEvent);
+              Event.buildWithEventName(eventName)
+                      .setCustomStringValue("purchaseDetails", eventDetails)
+                      .setGooglePlayReceipt(receipt, receiptDataSignature)
+                      .send();
             }
             else {
-              Tracker.sendEvent(eventName, eventDetails);
+              Event.buildWithEventName(eventName)
+                      .setCustomStringValue("purchaseDetails", eventDetails)
+                      .send();
             }
 
             // send Corona Lua event
@@ -1204,53 +1213,54 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
       }
 
       // configure Kochava params
-      Event eventParameters = null;
+
+      EventApi eventParameters = null;
 
       if (eventParamType.equals(STANDARD_TYPE_ACHIEVEMENT)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_ACHIEVEMENT);
+        eventParameters = Event.buildWithEventType(EventType.ACHIEVEMENT);
       }
       else if (eventParamType.equals(STANDARD_TYPE_ADVIEW)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_AD_VIEW);
+        eventParameters = Event.buildWithEventType(EventType.AD_VIEW);
       }
       else if (eventParamType.equals(STANDARD_TYPE_ADDTOCART)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_ADD_TO_CART);
+        eventParameters = Event.buildWithEventType(EventType.ADD_TO_CART);
       }
       else if (eventParamType.equals(STANDARD_TYPE_ADDTOWISHLIST)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_ADD_TO_WISH_LIST);
+        eventParameters = Event.buildWithEventType(EventType.ADD_TO_WISH_LIST);
       }
       else if (eventParamType.equals(STANDARD_TYPE_CHECKOUTSTART)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_CHECKOUT_START);
+        eventParameters = Event.buildWithEventType(EventType.CHECKOUT_START);
       }
       else if (eventParamType.equals(STANDARD_TYPE_LEVELCOMPLETE)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_LEVEL_COMPLETE);
+        eventParameters = Event.buildWithEventType(EventType.LEVEL_COMPLETE);
       }
       else if (eventParamType.equals(STANDARD_TYPE_PURCHASE)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_PURCHASE);
+        eventParameters = Event.buildWithEventType(EventType.PURCHASE);
       }
       else if (eventParamType.equals(STANDARD_TYPE_PUSH_OPENED)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_PUSH_OPENED);
+        eventParameters = Event.buildWithEventType(EventType.PUSH_OPENED);
       }
       else if (eventParamType.equals(STANDARD_TYPE_PUSH_RECEIVED)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_PUSH_RECEIVED);
+        eventParameters = Event.buildWithEventType(EventType.PUSH_RECEIVED);
       }
       else if (eventParamType.equals(STANDARD_TYPE_RATING)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_RATING);
+        eventParameters = Event.buildWithEventType(EventType.RATING);
       }
       else if (eventParamType.equals(STANDARD_TYPE_REGISTRATIONCOMPLETE)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_REGISTRATION_COMPLETE);
+        eventParameters = Event.buildWithEventType(EventType.REGISTRATION_COMPLETE);
       }
       else if (eventParamType.equals(STANDARD_TYPE_SEARCH)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_SEARCH);
+        eventParameters = Event.buildWithEventType(EventType.SEARCH);
       }
       else if (eventParamType.equals(STANDARD_TYPE_TUTORIALCOMPLETE)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_TUTORIAL_COMPLETE);
+        eventParameters = Event.buildWithEventType(EventType.TUTORIAL_COMPLETE);
       }
       else if (eventParamType.equals(STANDARD_TYPE_VIEW)) {
-        eventParameters = new Event(Tracker.EVENT_TYPE_VIEW);
+        eventParameters = Event.buildWithEventType(EventType.VIEW);
       }
       else { // custom type
         isCustomEvent = true;
-        eventParameters = new Event(eventParamType);
+        eventParameters = Event.buildWithEventName(eventParamType);
       }
 
       // standard events must have properties
@@ -1427,13 +1437,13 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
           Object value = standardParams.get(key);
 
           if (value instanceof Double) {
-            eventParameters = eventParameters.addCustom(key, (double)standardParams.get(key));
+            eventParameters = eventParameters.setCustomNumberValue(key, (double)standardParams.get(key));
           }
           else if (value instanceof String) {
-            eventParameters = eventParameters.addCustom(key, (String)standardParams.get(key));
+            eventParameters = eventParameters.setCustomStringValue(key, (String)standardParams.get(key));
           }
           else if (value instanceof Boolean) {
-            eventParameters = eventParameters.addCustom(key, (boolean)standardParams.get(key));
+            eventParameters = eventParameters.setCustomBoolValue(key, (boolean)standardParams.get(key));
           }
           else {
             Log.i(ERROR_MSG, "Invalid data type for custom parameter with key '" + key + "'");
@@ -1454,7 +1464,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
 
       // declare final values for inner loop
       final CoronaActivity coronaActivity = CoronaEnvironment.getCoronaActivity();
-      final Event fEventParameters = eventParameters;
+      final EventApi fEventParameters = eventParameters;
       final boolean fIsCustomEvent = isCustomEvent;
 
       if (coronaActivity != null) {
@@ -1462,8 +1472,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
           @Override
           public void run() {
             // send parameters to Kochava
-            Tracker.sendEvent(fEventParameters);
-
+            fEventParameters.send();
             // send Corona Lua event
             Map<String, Object> coronaEvent = new HashMap<>();
             coronaEvent.put(EVENT_PHASE_KEY, PHASE_RECORDED);
@@ -1511,34 +1520,14 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
         return 0;
       }
 
-      IdentityLink link = null;
 
       // check for key/value table (required)
       if (luaState.type(1) == LuaType.TABLE) {
-        link = makeIdentityLink(CoronaLua.toHashtable(luaState, 1));
+        makeIdentityLink(CoronaLua.toHashtable(luaState, 1));
       }
       else {
         logMsg(ERROR_MSG, "key/value table expected, got " + luaState.typeName(1));
         return 0;
-      }
-
-      // validation
-      if (link == null) {
-        logMsg(ERROR_MSG, "Invalid data privided to setIdentityLink()");
-        return 0;
-      }
-
-      final CoronaActivity coronaActivity = CoronaEnvironment.getCoronaActivity();
-      final IdentityLink fLink = link;
-
-      if (coronaActivity != null) {
-        coronaActivity.runOnUiThread(new Runnable() {
-          @Override
-          public void run() {
-            // send link dictionary to Kochava
-            Tracker.setIdentityLink(fLink);
-          }
-        });
       }
 
       return 0;
@@ -1591,8 +1580,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
             @Override
             public void run() {
               // send consent to Kochava
-              Tracker.setConsentGranted(fLocalHasUserConsent);
-              Tracker.clearConsentShouldPrompt();
+              Tracker.getInstance().setIntelligentConsentGranted(fLocalHasUserConsent);
             }
           });
         }
@@ -1609,37 +1597,6 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener
   // delegate implementation
   // -------------------------------------------------------
 
-  private class KochavaDelegate implements AttributionUpdateListener {
-    @Override
-    public void onAttributionUpdated(String msg) {
-      // send Corona Lua event
-      Map<String, Object> coronaEvent = new HashMap<>();
-      coronaEvent.put(EVENT_PHASE_KEY, PHASE_RECEIVED);
-      coronaEvent.put(EVENT_TYPE_KEY, TYPE_ATTRIBUTION);
-      coronaEvent.put(EVENT_DATA_KEY, msg);
-      dispatchLuaEvent(coronaEvent);
-    }
-  }
 
-  private class KochavaConsentDelegate implements ConsentStatusChangeListener {
-    @Override
-    public void onConsentStatusChange() {
-      // Check if we know our consent status from a previous launch.
-      if(!Tracker.isConsentGrantedOrNotRequired()) {
-        if(Tracker.isConsentShouldPrompt()) {
-          if (!intelligentConsentManagement) {
-            Tracker.setConsentGranted(hasUserConsent);
-            Tracker.clearConsentShouldPrompt();
-          } else {
-            // send Corona Lua event
-            Map<String, Object> coronaConsentEvent = new HashMap<>();
-            coronaConsentEvent.put(EVENT_PHASE_KEY, PHASE_RECEIVED);
-            coronaConsentEvent.put(EVENT_TYPE_KEY, TYPE_CONSENT);
-            coronaConsentEvent.put(EVENT_DATA_KEY, "Should prompt for user consent");
-            dispatchLuaEvent(coronaConsentEvent);
-          }
-        }
-      }
-    }
-  }
+
 }
